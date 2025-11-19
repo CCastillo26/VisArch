@@ -18,10 +18,10 @@ other_pc2@data <- other_pc2@data[, ..vars]
 
 other_pc <- rbind(other_pc1, other_pc2)
 
-veg_df   <- veg_pc@data
+veg_df <- veg_pc@data
 other_df <- other_pc@data
 
-veg_df$label   <- 1L # 1 = vegetation
+veg_df$label <- 1L # 1 = vegetation
 other_df$label <- 0L # 0 = other
 
 df <- bind_rows(veg_df, other_df) %>% 
@@ -50,7 +50,7 @@ params <- list(
 set.seed(123)
 
 max_cv_n <- 100000 # cap CV sample size
-n_full   <- length(y)
+n_full <- length(y)
 
 if (n_full > max_cv_n) {
   cv_idx <- sample(n_full, max_cv_n)
