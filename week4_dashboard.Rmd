@@ -1,6 +1,6 @@
 ---
 title: "CSCI 2370 Dashboard"
-output: 
+output: github_document
   flexdashboard::flex_dashboard:
     orientation: rows
     vertical_layout: fill
