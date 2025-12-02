@@ -9,13 +9,16 @@ runtime: shiny
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(shiny)
 library(tidyverse)
 library(DT)
 ```
 
+
 Column {data-width=350}
 -----------------------------------------------------------------------
-# Controls
+### Controls
+```{r}
 selectInput(
 inputId = "method",
 label   = "Preprocessing method",
@@ -33,8 +36,11 @@ choices = c("DTM" = "dtm",
 "Visibility (central structure)" = "vis"),
 selected = "chm"
 )
+```
 
-# Metrics
+
+### Metrics
+```{r}
 metrics <- tibble::tribble(
 ~Method,          ~Class,        ~Precision, ~Recall, ~F1,
 "RF",             "Vegetation",  0.68,       0.79,    0.73,
@@ -52,7 +58,7 @@ options = list(dom = 't', pageLength = 10),
 rownames = FALSE
 )
 })
-
+```
 
 
 Column {data-width=650}
