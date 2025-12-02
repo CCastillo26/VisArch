@@ -1,32 +1,37 @@
 ---
-title: "CSCI 2370 Dashboard"
-output: github_document
+title: "Untitled"
+output: 
   flexdashboard::flex_dashboard:
-    orientation: rows
+    orientation: columns
     vertical_layout: fill
-    theme: cosmo
-date: "2025-11-16"
+runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
-library(knitr)
-library(DT)
-library(leaflet)
-library(plotly)
 ```
 
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
 ```{r}
-# Create flexdashboard skeleton
 
-# Raw (Unclassified)
-# include_graphics("raw.png")
-# checkboxInput("raw_conf", "Show confidence (disabled)", FALSE)
-# checkboxInput("raw_viewshed", "Show viewshed zones", FALSE)
-# checkboxInput("raw_visnet", "Show visibility network", FALSE)
-# checkboxInput("raw_surfaces", "Show surface models (DSM/DTM/CHM)", FALSE)
-# if (input$raw_surfaces) {
-# include_graphics("raw_surfaces.png")
-# }
+```
 
-# Repeat for RF and XGB
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+
+```
+
+### Chart C
+
+```{r}
+
+```
+
