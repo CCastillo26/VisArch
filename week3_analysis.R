@@ -77,7 +77,7 @@ for (i in seq_len(nrow(vp_df))) {
     overwrite = TRUE
   )
   
-  # RF / 3DMASC
+  # RF
   vs_rf <- terra::viewshed(dtm_rf, this_xy, observer = observer_height)
   writeRaster(
     vs_rf,
