@@ -3,8 +3,12 @@ library(terra)
 library(xgboost)
 library(data.table)
 
-bst <- readRDS("ollape_xgb_model.rds")
+raw_path <-"/Users/charlycastillo/Downloads/ollape_nomanual.las"
+rf_path <- "/Users/charlycastillo/Downloads/ollape_3DMASC.las"
+xgb_model <- "ollape_xgb_model.rds"
+xgb_out_las <- "ollape_xgb_classified.las"
 
+bst <- readRDS("ollape_xgb_model.rds")
 raw_pc <- readLAS("/Users/charlycastillo/Downloads/ollape_nomanual.las")
 
 df_raw <- as.data.frame(raw_pc@data)
@@ -18,11 +22,40 @@ pred_all <- as.integer(p_full >= 0.5) # 1 = veg, 0 = other
 raw_pc@data$pred_xgb <- pred_all
 raw_pc@data$prob_xgb <- p_full
 
-writeLAS(raw_pc, "ollape_xgb_classified.las")
+writeLAS(raw_pc, xgb_out_las)
 
+pc_xgb_clean <- filter_poi(raw_pc, pred_xgb == 0) # Cleaned, only non-veg
+
+rf_pc <- readLAS(rf_path)
+
+# DTMs (0.5 m)
 dtm_raw <- rasterize_terrain(raw_pc, res = 0.5, algorithm = knnidw())
+dtm_rf  <- rasterize_terrain(rf_pc, res = 0.5, algorithm = knnidw())
+dtm_xgb <- rasterize_terrain(pc_xgb_clean, res = 0.5, algorithm = knnidw())
 
 writeRaster(dtm_raw, "dtm_raw_0p5m.tif", overwrite = TRUE)
+writeRaster(dtm_rf, "dtm_rf_0p5m.tif", overwrite = TRUE)
+writeRaster(dtm_xgb, "dtm_xgb_0p5m.tif", overwrite = TRUE)
+
+# DSMs (0.5 m)
+dsm_raw <- rasterize_canopy(raw_pc, res = 0.5, algorithm = p2r())
+dsm_rf <- rasterize_canopy(rf_pc, res = 0.5, algorithm = p2r())
+dsm_xgb <- rasterize_canopy(pc_xgb_clean, res = 0.5, algorithm = p2r())
+
+writeRaster(dsm_raw, "dsm_raw_0p5m.tif", overwrite = TRUE)
+writeRaster(dsm_rf,  "dsm_rf_0p5m.tif",  overwrite = TRUE)
+writeRaster(dsm_xgb, "dsm_xgb_0p5m.tif", overwrite = TRUE)
+
+# CHMs (DSM - DTM)
+chm_raw <- dsm_raw - dtm_raw
+chm_rf <- dsm_rf - dtm_rf
+chm_xgb <- dsm_xgb - dtm_xgb
+
+writeRaster(chm_raw, "chm_raw_0p5m.tif", overwrite = TRUE)
+writeRaster(chm_rf,  "chm_rf_0p5m.tif",  overwrite = TRUE)
+writeRaster(chm_xgb, "chm_xgb_0p5m.tif", overwrite = TRUE)
+
+
 
 # XGBoost-cleaned DTM
 pc_clean <- filter_poi(raw_pc, pred_xgb == 0)
