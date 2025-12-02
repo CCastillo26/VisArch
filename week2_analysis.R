@@ -49,7 +49,7 @@ params <- list(
 # 5-fold cross validation on subsample
 set.seed(123)
 
-max_cv_n <- 100000 # cap CV sample size
+max_cv_n <- 100000 # Cap CV sample size
 n_full <- length(y)
 
 if (n_full > max_cv_n) {
