@@ -22,7 +22,7 @@ Column {data-width=350}
 ```{r}
 selectInput(
 inputId = "method",
-label   = "Preprocessing method",
+label   = "Preprocessing Method",
 choices = c("Raw" = "raw",
 "Random Forest (Abate et al., 2019)" = "rf",
 "XGBoost" = "xgb"),
@@ -30,26 +30,67 @@ selected = "xgb"
 )
 
 radioButtons(
-inputId = "layer",
-label   = "Layer to display",
-choices = c("Digital Surface Model (DSM)" = "dsm",
-"Digital Terrain Model (DTM)" = "dtm",
-"Canopy Height Model (CHM)" = "chm"),
-selected = "chm"
+  inputId     = "layer",
+  label       = "Display Layer",
+  choiceNames = list(
+    # DSM option: bold title, italic definition
+    tags$div(
+      tags$div(tags$strong("Digital Surface Model (DSM)")),
+      tags$div(
+        style = "margin-left: 20px; font-size: 0.9em; color: #555;",
+        tags$em(
+          "Digital surface models are elevation surfaces that include ground, vegetation, and structures."
+        )
+      )
+    ),
+    # DTM option
+    tags$div(
+      tags$div(tags$strong("Digital Terrain Model (DTM)")),
+      tags$div(
+        style = "margin-left: 20px; font-size: 0.9em; color: #555;",
+        tags$em(
+          "Digital terrain models are bare-earth surfaces with vegetation and buildings removed."
+        )
+      )
+    ),
+    # CHM option
+    tags$div(
+      tags$div(tags$strong("Canopy Height Model (CHM)")),
+      tags$div(
+        style = "margin-left: 20px; font-size: 0.9em; color: #555;",
+        tags$em(
+          "Canopy height models are calculated as DSM minus DTM and highlight vegetation height above the ground."
+        )
+      )
+    )
+  ),
+  choiceValues = c("dsm", "dtm", "chm"),
+  selected     = "chm"
 )
+
+# Visibility networks, confidence intervals, overlays (hover)
+
+# radioButtons(
+# inputId = "layer",
+# label   = "Display Layer",
+# choices = c("Digital Surface Model (DSM)" = "dsm",
+# "Digital Terrain Model (DTM)" = "dtm",
+# "Canopy Height Model (CHM)" = "chm"),
+# selected = "chm"
+# )
 ```
 
 
 ### Metrics
 ```{r}
 metrics <- tibble::tribble(
-~Method,          ~Class,        ~Precision, ~Recall, ~F1,
-"RF",             "Vegetation",  0.68,       0.79,    0.73,
-"RF",             "Other",       0.70,       0.57,    0.63,
-"XGB (random)",   "Vegetation",  0.9892,     0.9955,  0.9924,
-"XGB (random)",   "Other",       0.9513,     0.8904,  0.9198,
-"XGB (tile)",     "Vegetation",  0.9891,     0.9957,  0.9924,
-"XGB (tile)",     "Other",       0.9531,     0.8896,  0.9203
+~Method, ~Class, ~Precision, ~Recall, ~F1,
+"RF (Abate et al., 2019)", "Vegetation",  0.68, 0.79, 0.73,
+"RF (Abate et al., 2019)", "Other", 0.70, 0.57, 0.63,
+"XGBoost (random)", "Vegetation", 0.9892, 0.9955, 0.9924,
+"XGBoost (random)", "Other", 0.9513, 0.8904, 0.9198,
+"XGBoost (tile)", "Vegetation", 0.9891, 0.9957, 0.9924,
+"XGBoost (tile)", "Other", 0.9531, 0.8896, 0.9203
 )
 
 DT::renderDataTable({
@@ -64,7 +105,7 @@ rownames = FALSE
 
 Column {data-width=650}
 -----------------------------------------------------------------------
-### Ollape view
+### Ollape
 ```{r}
 renderPlot({
   
