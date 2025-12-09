@@ -1,4 +1,5 @@
-# *VisArch*
+# *VisArch*: An Interactive Dashboard for Comparing LiDAR Preprocessing
+Methods at Chachapoya Settlements
 ## Quick Tutorial
 *VisArch* is an interactive visualization tool for exploring how different LiDAR preprocessing methods affect archaeological interpretation at the Chachapoya site of Ollape. The main dashboard is implemented as an R Markdown flexdashboard (`week4_dashboard.Rmd`). When you knit this file, RStudio produces an HTML page that you can open in any web browser.
 
