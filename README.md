@@ -1,5 +1,6 @@
 # *VisArch*
-Vegetation Classification & Terrain Modeling Using LiDAR + XGBoost
+## Quick Tutorial
+*VisArch* is an interactive visualization tool for exploring how different LiDAR preprocessing methods affect archaeological interpretation at the Chachapoya site Ollape. It includes a dashboard that lets you compare three processing pipelines and examine their results across several derived surfaces. A default set of `.tif` and `.las` files is loaded automatically, but you may replace them with your own processed outputs by updating the `/Outputs` directory.
 
 This repository contains a full LIDAR processing pipeline for vegetation classification, DTM/DSM/CHM construction, and visibility analysis using lidR, xgboost, terra, and a Shiny dashboard for visualization.
 
