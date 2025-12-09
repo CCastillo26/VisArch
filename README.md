@@ -1,4 +1,4 @@
-Final project for CSCI 2370: Interdisciplinary Scientific Visualization
+# *VisArch*
 Vegetation Classification & Terrain Modeling Using LiDAR + XGBoost
 
 This repository contains a full LIDAR processing pipeline for vegetation classification, DTM/DSM/CHM construction, and visibility analysis using lidR, xgboost, terra, and a Shiny dashboard for visualization.
