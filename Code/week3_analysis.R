@@ -87,9 +87,11 @@ for (i in seq_len(nrow(vp_df))) {
   
   # XGB
   vs_xgb <- terra::viewshed(dtm_xgb, this_xy, observer = observer_height)
-  writeRaster(
+  writeRaster()
     vs_xgb,
     paste0("vis_xgb_", this_id, "_0p5m.tif"),
     overwrite = TRUE
   )
 }
+
+# Do confidence levels (red, yellow, green on map overlaid)
