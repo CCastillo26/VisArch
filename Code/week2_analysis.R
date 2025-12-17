@@ -206,3 +206,25 @@ recall_sp
 f1_sp
 
 saveRDS(bst, "ollape_xgb_model.rds")
+
+site_pc <- readLAS("/Users/charlycastillo/Documents/GitHub/2370-project/ollape_xgb_classified.las")
+
+site_df <- as.data.frame(site_pc@data)
+
+X_site <- as.matrix(site_df[, feature_cols])
+
+d_site   <- xgb.DMatrix(X_site)
+p_site   <- predict(bst, d_site)
+pred_lab <- as.integer(p_site >= 0.5)
+
+site_pc@data$pred_xgb <- pred_lab
+site_pc@data$prob_xgb <- p_site
+
+writeLAS(site_pc,
+         "/Users/charlycastillo/Documents/GitHub/2370-project/ollape_xgb_classified_withpreds.las")
+
+site_noveg <- filter_poi(site_pc, pred_xgb == 0)
+
+writeLAS(site_noveg,
+         "/Users/charlycastillo/Documents/GitHub/2370-project/ollape_xgb_noveg.las")
+
